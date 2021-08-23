@@ -1,0 +1,23 @@
+package hello.core.order;
+
+import hello.core.discount.DiscountPolicy;
+import hello.core.discount.FixDiscountPolicy;
+import hello.core.member.Grade;
+import hello.core.member.Member;
+import hello.core.member.MemberRepository;
+import hello.core.member.MemoryMemberRepository;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class OrderServiceImplTest {
+
+    @Test
+    void createOrder() {
+        MemberRepository memberRepository = new MemoryMemberRepository();
+        DiscountPolicy fixDiscountPolicy = new FixDiscountPolicy();
+        OrderService orderService = new OrderServiceImpl(memberRepository, fixDiscountPolicy);
+        memberRepository.save(new Member(1L, "name", Grade.VIP));
+        orderService.createOrder(1L, "itemA", 10000);
+    }
+}
